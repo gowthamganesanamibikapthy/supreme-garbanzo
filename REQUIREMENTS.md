@@ -38,33 +38,29 @@ This document establishes the official functional, non-functional, and technical
 
 ```mermaid
 graph TD
-    %% User/Business Goals
-    subgraph UX [User Experience Targets]
-        G1[Aesthetic Customization]
-        G2[Zero System Distraction]
-        G3[Strict Accountability]
+    %% Component Layers
+    subgraph Client Application [PyQt6 Modular Client Desktop Container]
+        C1[main_client.py: Orchestration Engine]
+        C2[paint_engine.py: Vector Shader Component]
+        C3[system_tray.py: OS Tray Menu Context Taskbar]
+        C4[dashboard_hud.py: User Operational Dashboard]
     end
 
-    %% Functional Specifications
-    subgraph FR [Functional Requirements]
-        FR1[FR-1.1: Hot-Swap Skin Engine]
-        FR2[FR-1.3: Asynchronous Audio Thread]
-        FR3[FR-1.5: Procrastination Block Gate]
+    subgraph Service Backend [FastAPI Asynchronous Web Layer Cluster]
+        S1[database.py: Relational Connection Interface]
+        S2[auth_service.py: Encryption Security Access Controller]
+        S3[task_service.py: Multitenant Task Lifecycle Processor]
     end
 
-    %% Software Implementation Modules
-    subgraph App [System Modules app.py / server.py]
-        M1[QPainter Vector Paint Engine]
-        M2[AsyncVoiceEngine QThread]
-        M3[FastAPI Core Server Pipeline]
-    end
+    %% Internal Component Signalling Mapping
+    C1 -->|Draw Invocation Callbacks| C2
+    C1 -->|Status Minimization Overrides| C3
+    C1 -->|Action Interlock Signals| C4
 
-    %% Traceability Links
-    G1 --> FR1
-    G2 --> FR2
-    G3 --> FR3
-
-    FR1 --> M1
-    FR2 --> M2
-    FR3 --> M3
+    %% Cross-Network Boundaries Wireframes
+    C1 <-->|JSON Data Payloads over HTTP Rest API| S2
+    C1 <-->|JSON Data Payloads over HTTP Rest API| S3
+    
+    S2 -->|Read/Write Operations| S1
+    S3 -->|Read/Write Operations| S1
 ```
